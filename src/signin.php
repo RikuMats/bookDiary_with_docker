@@ -1,3 +1,30 @@
-<!-- idとパスワード受け取ってtokenも -->
-<!-- 
-https://qiita.com/wakahara3/items/792943c1e0ed7a87e1ef -->
+<?php
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
+header("Content-type: application/json; charset=UTF-8");
+// idとパスワード受け取ってtokenも
+// https://qiita.com/wakahara3/items/792943c1e0ed7a87e1ef
+session_start();
+
+$userId = $_POST['userId'];
+$password = $_POST['password'];
+$hashed_password = password_hash('passwo', PASSWORD_DEFAULT);
+if (password_verify($password, $hashed_password)){
+  $_SESSION['token'] = "tokenA";
+  $isVerified = true;
+}else{
+  $isVerified = false;
+}
+$data = array(
+  "token" => $_SESSION['token'],
+  "isVerified" => $isVerified
+);
+
+if(json_last_error() == JSON_ERROR_NONE){
+    echo json_encode($data);
+}
+else{
+    http_response_code(500);
+}
+
+?>

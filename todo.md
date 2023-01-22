@@ -46,7 +46,7 @@ password: raw password
   status: bool,
   token: string,
 }
-## fetchBooks
+## fetchUserData
 http://localhost:8080/fetchBooks.php
 ### argument
 id: user id
@@ -54,12 +54,13 @@ token:
 
 ### process
 1. セッションからトークン取得
-2. トークンに問題なければidでデータベースからbookを取得(新しい順に並べておく)
+2. トークンに問題なければidでデータベースからuserNameとbookを取得(新しい順に並べておく)
 3. booksを返送
 
 ### response
 {
   status: bool,
+  userName: string,
   books: List<{
     isbn: string,
     title: string,
