@@ -1,0 +1,29 @@
+version: "3"
+ 
+services:
+  php:
+    container_name: php
+    build:
+      context: .\php
+    ports:
+      - 8080:80
+    volumes:
+      - .\php\php.ini:/usr/local/etc/php/php.ini
+      - .\src:/var/www/html
+    restart: always
+  db:
+    container_name: mysql
+    image: mysql:8.0.23
+    volumes:
+      - .\mysql\vol:/var/lib/mysql
+      - .\mysql\init.d:/docker-entrypoint-initdb.d
+      - .\mysql\my.cnf:/etc/mysql/conf.d/my.cnf
+    # restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: r_pass
+      MYSQL_DATABASE: test_project
+      MYSQL_USER: usr
+      MYSQL_PASSWORD: pass
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - 3306:3306
