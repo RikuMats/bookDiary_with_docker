@@ -4,19 +4,19 @@ header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 header("Content-type: application/json; charset=UTF-8");
 // idとパスワード受け取ってtokenも
 // https://qiita.com/wakahara3/items/792943c1e0ed7a87e1ef
-session_start();
 
 $userId = $_POST['userId'];
 $password = $_POST['password'];
 $hashed_password = password_hash('passwo', PASSWORD_DEFAULT);
 if (password_verify($password, $hashed_password)){
-  $_SESSION['token'] = "tokenA";
+  $token = "tokenA";
+  // データベースに登録する
   $isVerified = true;
 }else{
   $isVerified = false;
 }
 $data = array(
-  "token" => $_SESSION['token'],
+  "token" => $token,
   "isVerified" => $isVerified
 );
 

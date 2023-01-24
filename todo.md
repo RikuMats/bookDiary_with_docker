@@ -1,4 +1,8 @@
 # api List
+## now
+fetchUserData
+
+
 ## sign up
 http://localhost:8080/signup.php
 ### argument
