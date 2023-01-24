@@ -5,8 +5,11 @@ header("Content-type: application/json; charset=UTF-8");
 // idとパスワード受け取ってtokenも
 // https://qiita.com/wakahara3/items/792943c1e0ed7a87e1ef
 
-$userId = $_POST['userId'];
-$postedToken = $_POST['token'];
+$json = file_get_contents('php://input');
+$data = json_decode($json, true);
+
+$userId = $data['userId'];
+$postedToken = $data['token'];
 // データベースから持ってくる
 $token = "tokenA";
 if (strcmp($token, $postedToken) == 0){
