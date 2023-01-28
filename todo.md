@@ -1,6 +1,5 @@
 # api List
 ## now
-fetchUserData
 
 
 ## sign up

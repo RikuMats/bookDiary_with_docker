@@ -2,9 +2,6 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 header("Content-type: application/json; charset=UTF-8");
-// idとパスワード受け取ってtokenも
-// https://qiita.com/wakahara3/items/792943c1e0ed7a87e1ef
-
 $json = file_get_contents('php://input');
 $postedData = json_decode($json, true);
 
