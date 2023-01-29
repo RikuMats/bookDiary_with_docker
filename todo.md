@@ -1,6 +1,6 @@
 # api List
 ## now
-
+ signUp
 
 ## sign up
 http://localhost:8080/signup.php
