@@ -2,7 +2,7 @@
 function connect_db(){
     //ホスト名、データベース名、文字コードの３つを定義する
     $host = 'mysql';
-    $db = 'test_project';
+    $db = 'book_diary';
     $charset = 'utf8';
     $port = '3306';
     $dsn = "mysql:host=$host; port=$port; dbname=$db; charset=$charset";

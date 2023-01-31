@@ -21,7 +21,7 @@ services:
     # restart: always
     environment:
       MYSQL_ROOT_PASSWORD: r_pass
-      MYSQL_DATABASE: test_project
+      MYSQL_DATABASE: book_diary
       MYSQL_USER: usr
       MYSQL_PASSWORD: pass
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
