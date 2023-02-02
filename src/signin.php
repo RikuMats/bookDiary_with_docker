@@ -2,6 +2,7 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 header("Content-type: application/json; charset=UTF-8");
+require_once("connection.php");
 // idとパスワード受け取ってtokenも
 // https://qiita.com/wakahara3/items/792943c1e0ed7a87e1ef
 
@@ -11,6 +12,7 @@ $userId = $data['userId'];
 $password = $data['password'];
 $hashed_password = password_hash('passwo', PASSWORD_DEFAULT);
 if (password_verify($password, $hashed_password)){
+  //ランダムでトークを生成する
   $token = "tokenA";
   // データベースに登録する
   $isVerified = true;
