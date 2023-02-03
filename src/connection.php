@@ -29,6 +29,16 @@ function connect_db(){
   return $pdo;
 }
 
+function verify_token($pdo, $userId, $token) {
+    $sql = "SELECT * FROM users 
+WHERE id=?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array($userId));
+$result = $stmt->fetch();
+
+return strcmp($result['token'], $token) == 0;
+}
+
 //データベースと接続して、PDOインスタンスを取得
 $pdo = connect_db();
 

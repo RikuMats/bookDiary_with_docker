@@ -16,13 +16,8 @@ WHERE id=?";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(array($userId));
 $result = $stmt->fetch();
-
-if (strcmp($result['token'], $postedToken) == 0 &&
-strcmp($verificationCode,$result['verification_code']) == 0 ){
-  $isVerified = true;
-}else{
-  $isVerified = false;
-}
+$isVerified = strcmp($result['token'], $postedToken) == 0 &&
+  strcmp($verificationCode, $result['verification_code']) == 0;
 $data = array(
   "isVerified" => $isVerified,
 );
