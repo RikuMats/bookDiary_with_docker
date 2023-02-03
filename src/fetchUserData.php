@@ -11,12 +11,29 @@ $data = json_decode($json, true);
 $userId = $data['userId'];
 $postedToken = $data['token'];
 // データベースから持ってくる
-$token = "tokenA";
-if (strcmp($token, $postedToken) == 0){
-  $isVerified = true;
-}else{
-  $isVerified = false;
+$isVerified = verify_token($pod, $userId, $postedToken);
+
+$sql = "SELECT t2.isbn, t2.title, t2.author, t2.img_url,t1.impression, t1.red_date FROM history AS t1
+JOIN book_master as t2
+ON t1.isbn=t2.isbn AND t1.user_id=?
+ORDER BY t1.red_date";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array($userId));
+$result = $stmt->fetchall();
+// 未読と読了の配列作る
+$data = [];
+foreach($result as $history) {
+  $data[] = array(
+    "isbn" => $history["isbn"],
+    "title" => $history["title"],
+    "author" => $history["author"],
+    "img_url" => $history["img_url"],
+    "impression" => $history["impression"]
+  );
 }
+
+
+
 $data = array(
   "isVerified" => $isVerified,
   "userName" => "default-name",

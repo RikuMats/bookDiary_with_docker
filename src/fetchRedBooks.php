@@ -21,10 +21,10 @@ header("Content-type: application/json; charset=UTF-8");
 
 require_once("connection.php");
 
-$sql = "SELECT t2.isbn, t2.title, t2.author, t2.img_url,t1.impression, t1.red_date FROM history AS t1
+$sql = "SELECT t2.isbn, t2.title, t2.author, t2.img_url,t1.impression, t1.updated_date FROM history AS t1
 JOIN book_master as t2
 ON t1.isbn=t2.isbn
-ORDER BY t1.red_date";
+ORDER BY t1.updated_date";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $result = $stmt->fetchall();

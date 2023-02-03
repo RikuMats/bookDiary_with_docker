@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS history(
 isbn CHAR(13),
 user_id char(12),
 impression TEXT,
-red_date DATETIME
+updated_date DATETIME
 );
 
 -- initial insertion
@@ -34,9 +34,9 @@ INSERT INTO book_master (isbn, title, author, img_url) VALUES ('9784041117170', 
 INSERT INTO book_master (isbn, title, author, img_url) VALUES ('9784122064492',  '花咲舞が黙ってない', '池井戸潤', 'http://books.google.com/books/content?id=F-2CswEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api');
 INSERT INTO book_master (isbn, title, author, img_url) VALUES ('9784087716191', '陸王', '池井戸潤', 'http://books.google.com/books/content?id=5y2DvgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api');
 
-INSERT INTO history(isbn, user_id, impression, red_date)
+INSERT INTO history(isbn, user_id, impression, updated_date)
 VALUES('9784198942304', 'A01234567890', 'that''s interesting', '2000-01-01 00:00:00');
 
-INSERT INTO history(isbn, user_id, impression, red_date)
+INSERT INTO history(isbn, user_id, impression, updated_date)
 VALUES('9784167110116', 'A01234567890', 'that''s fun', '2000-01-01 00:01:00');
 

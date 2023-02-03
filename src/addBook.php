@@ -11,19 +11,19 @@ $userId = $postedData['userId'];
 $postedToken = $postedData['token'];
 
 $book = $postedData['newBook'];
-// データベースから持ってくる
 $isVerified = verify_token($pdo, $userId, $postedToken);
 $sql = "INSERT IGNORE INTO book_master (isbn, title, author, img_url) VALUES(?,?,?,?)";
 $stmt = $pdo->prepare($sql);
 $flag = $stmt->execute(array($book['isbn'], $book['title'], $book['author'], $book['img_url']));
 
 $isVerified = $isVerified && $flag; 
-$sql = "INSERT IGNORE INTO history (isbn, user_id) VALUES(?,?)";
+
+// dateも加える
+$sql = "INSERT IGNORE INTO history (isbn, user_id,updated_date) VALUES(?,?,?)";
 $stmt = $pdo->prepare($sql);
-$flag = $stmt->execute(array($book['isbn'], $userId));
+$flag = $stmt->execute(array($book['isbn'], $userId,));
 
 $isVerified = $isVerified && $flag; 
-//データベースにbook登録
 $data = array(
   "isVerified" => $isVerified,
   "book" => $book
