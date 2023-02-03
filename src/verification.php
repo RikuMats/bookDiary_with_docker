@@ -2,23 +2,25 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 header("Content-type: application/json; charset=UTF-8");
+require_once("connection.php");
+
 $json = file_get_contents('php://input');
 $postedData = json_decode($json, true);
 
 $userId = $postedData['userId'];
 $postedToken = $postedData['token'];
-
 $verificationCode = $postedData['verificationCode'];
-$token = "tokenA";
-if (strcmp($token, $postedToken) == 0){
+
+$sql = "SELECT * FROM users 
+WHERE id=?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array($userId));
+$result = $stmt->fetch();
+
+if (strcmp($result['token'], $postedToken) == 0 &&
+strcmp($verificationCode,$result['verification_code']) == 0 ){
   $isVerified = true;
 }else{
-  $isVerified = false;
-}
-// データベースから持ってくる
-if ($isVerified && (strcmp($verificationCode, "code") == 0)){
-  $isVerified = true;
-} else{
   $isVerified = false;
 }
 $data = array(
