@@ -1,7 +1,8 @@
 # api List
 ## now
- signUp
-
+いったん完了　
+- エラー処理を書く try
+- 空欄で送ったときに送れないようにするかつデータベース更新しないようにする。
 ## sign up
 http://localhost:8080/signup.php
 ### argument

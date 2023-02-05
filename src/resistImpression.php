@@ -2,6 +2,8 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 header("Content-type: application/json; charset=UTF-8");
+require_once("connection.php");
+
 $json = file_get_contents('php://input');
 $postedData = json_decode($json, true);
 
@@ -10,16 +12,19 @@ $postedToken = $postedData['token'];
 $postedISBN = $postedData['isbn'];
 $postedImpression = $postedData['impression'];
 
+$isVerified = verify_token($pdo, $userId, $postedToken);
 // データベースから持ってくる
 //isbnとuserIdをキーにして状態の書き換え
-// 感想を書いた日付保存
-$token = "tokenA";
-if (strcmp($token, $postedToken) == 0){
-  $isVerified = true;
-}else{
-  $isVerified = false;
+
+$date = new DateTimeImmutable();
+$date_str = $date->format("Y-m-d H:i:s");
+if($isVerified) {
+  $sql = "UPDATE history SET impression=?, updated_date=?, is_red=?";
+  $stmt = $pdo->prepare($sql);
+  $isVerified = $stmt->execute(array($postedImpression, $date_str,true));
 }
-//データベースにbook登録
+
+// 感想を書いた日付保存
 $data = array(
   "isVerified" => $isVerified,
   // isbnはテスト用最終的にはいらない

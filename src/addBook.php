@@ -17,11 +17,12 @@ $stmt = $pdo->prepare($sql);
 $flag = $stmt->execute(array($book['isbn'], $book['title'], $book['author'], $book['img_url']));
 
 $isVerified = $isVerified && $flag; 
-
+$date = new DateTimeImmutable();
+$date_str = $date->format("Y-m-d H:i:s");
 // dateも加える
-$sql = "INSERT IGNORE INTO history (isbn, user_id,updated_date) VALUES(?,?,?)";
+$sql = "INSERT IGNORE INTO history (isbn, user_id,updated_date,is_red) VALUES(?,?,?,?)";
 $stmt = $pdo->prepare($sql);
-$flag = $stmt->execute(array($book['isbn'], $userId,));
+$flag = $stmt->execute(array($book['isbn'], $userId, $date_str, false));
 
 $isVerified = $isVerified && $flag; 
 $data = array(
