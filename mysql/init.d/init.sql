@@ -5,7 +5,7 @@ name varchar(32) NOT NULL,
 password TEXT NOT NULL,
 email TEXT NOT NULL,
 verification_code char(6) ,
-token char(12)
+token char(6)
 );
 
 CREATE TABLE IF NOT EXISTS book_master(
@@ -20,7 +20,8 @@ isbn CHAR(13) NOT NULL,
 user_id char(12) NOT NULL,
 impression TEXT,
 updated_date DATETIME NOT NULL,
-is_red BOOLEAN NOT NULL
+is_red BOOLEAN NOT NULL,
+PRIMARY KEY (isbn, user_id)
 );
 
 -- initial insertion

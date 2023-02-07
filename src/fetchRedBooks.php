@@ -19,8 +19,9 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 header("Content-type: application/json; charset=UTF-8");
 
-require_once("connection.php");
+require_once("utils.php");
 
+$pdo = connect_db();
 $sql = "SELECT t2.isbn, t2.title, t2.author, t2.img_url,t1.impression, t1.updated_date FROM history AS t1
 JOIN book_master as t2
 ON t1.isbn=t2.isbn AND t1.is_red=TRUE

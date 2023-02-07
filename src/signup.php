@@ -2,7 +2,6 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 header("Content-type: application/json; charset=UTF-8");
-require_once("connection.php");
 require_once("utils.php");
 function makeId() {
   //あとでuuid使う
@@ -45,6 +44,7 @@ $token = makeToken();
 $userId = makeId();
 // サーバに保存
 $oneTimeCode = "code00";
+$pdo = connect_db();
 $sql = "INSERT INTO users (id,name,password, email,verification_code, token) VALUES(?,?,?,?,?,?)";
 $stmt = $pdo->prepare($sql);
 $flag = $stmt->execute(array($userId, $userName, $hashed_password, $email, $oneTimeCode, $token));

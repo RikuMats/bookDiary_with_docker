@@ -2,7 +2,7 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 header("Content-type: application/json; charset=UTF-8");
-require_once("connection.php");
+require_once("utils.php");
 
 $json = file_get_contents('php://input');
 $postedData = json_decode($json, true);
@@ -12,16 +12,21 @@ $postedToken = $postedData['token'];
 $postedISBN = $postedData['isbn'];
 $postedImpression = $postedData['impression'];
 
-$isVerified = verify_token($pdo, $userId, $postedToken);
 // データベースから持ってくる
 //isbnとuserIdをキーにして状態の書き換え
 
 $date = new DateTimeImmutable();
 $date_str = $date->format("Y-m-d H:i:s");
+$pdo = connect_db();
+
+$isVerified = verify_token($pdo, $userId, $postedToken);
+
 if($isVerified) {
-  $sql = "UPDATE history SET impression=?, updated_date=?, is_red=?";
+  $sql = "UPDATE history SET impression=?, updated_date=?, is_red=?
+  WHERE isbn=? AND user_id=?"
+  ;
   $stmt = $pdo->prepare($sql);
-  $isVerified = $stmt->execute(array($postedImpression, $date_str,true));
+  $isVerified = $stmt->execute(array($postedImpression, $date_str,true, $postedISBN, $userId));
 }
 
 // 感想を書いた日付保存

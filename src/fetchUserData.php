@@ -4,7 +4,7 @@ header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 header("Content-type: application/json; charset=UTF-8");
 // idとパスワード受け取ってtokenも
 // https://qiita.com/wakahara3/items/792943c1e0ed7a87e1ef
-require_once("connection.php");
+require_once("utils.php");
 
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
@@ -12,6 +12,7 @@ $data = json_decode($json, true);
 $userId = $data['userId'];
 $postedToken = $data['token'];
 // データベースから持ってくる
+$pdo = connect_db();
 $isVerified = verify_token($pdo, $userId, $postedToken);
 $sql = "SELECT name FROM users 
 WHERE id=?";

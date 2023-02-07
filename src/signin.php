@@ -2,7 +2,6 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 header("Content-type: application/json; charset=UTF-8");
-require_once("connection.php");
 require_once("utils.php");
 // idとパスワード受け取ってtokenも
 // https://qiita.com/wakahara3/items/792943c1e0ed7a87e1ef
@@ -12,6 +11,7 @@ $data = json_decode($json, true);
 $userId = $data['userId'];
 $password = $data['password'];
 
+$pdo = connect_db();
 $sql = "SELECT password, name FROM users WHERE id=?";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(array($userId));
