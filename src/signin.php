@@ -14,16 +14,22 @@ $password = $data['password'];
 $pdo = connect_db();
 $sql = "SELECT password, name FROM users WHERE id=?";
 $stmt = $pdo->prepare($sql);
-$stmt->execute(array($userId));
-$result = $stmt->fetch();
+try{
+  $stmt->execute(array($userId));
+  $result = $stmt->fetch();  
+} catch(PDOException $e) {
+  //something
+}
 
 $isVerified =password_verify($password, $result['password']);
-//データベースに登録　アップデート 
+//データベースに登録　アップデート
 if ($isVerified) {
   $token = makeToken();
-  $sql = "UPDATE users SET   token=?";
+  $sql = "UPDATE users SET token=? WHERE user_id=?";
   $stmt = $pdo->prepare($sql);
-  $isVerified = $stmt->execute(array($token));
+  $isVerified = $stmt->execute(array($token, $userId));
+} else {
+  $token = ""; 
 }
 
 $data = array(
