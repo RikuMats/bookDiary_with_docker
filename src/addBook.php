@@ -24,7 +24,7 @@ $date_str = $date->format("Y-m-d H:i:s");
 $sql = "INSERT INTO history (isbn, user_id,updated_date,is_red) VALUES(?,?,?,?)";
 $stmt = $pdo->prepare($sql);
 try {
-  $flag = $stmt->execute(array($book['isbn'], $userId, $date_str, "FALSE"));
+  $flag = $stmt->execute(array($book['isbn'], $userId, $date_str, 0));
 } catch(e) {
   $flag = false;
 }

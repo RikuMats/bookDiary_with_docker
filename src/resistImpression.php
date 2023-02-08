@@ -26,7 +26,7 @@ if($isVerified) {
   WHERE isbn=? AND user_id=?"
   ;
   $stmt = $pdo->prepare($sql);
-  $isVerified = $stmt->execute(array($postedImpression, $date_str,true, $postedISBN, $userId));
+  $isVerified = $stmt->execute(array($postedImpression, $date_str, 1, $postedISBN, $userId));
 }
 
 // 感想を書いた日付保存
